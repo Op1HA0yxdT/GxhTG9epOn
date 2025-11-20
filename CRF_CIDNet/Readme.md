@@ -23,11 +23,11 @@ pip install -r requirements.txt
 
 ### Data Preparation
 
-LOLv1 
 
-LOLv2
+LOL-v1 [Proton Drive](https://drive.proton.me/urls/7HMEGKRD9G#4JGNUqLuigWG)
 
-SDSD [Google Drive](https://drive.google.com/drive/folders/14TF0f9YQwZEntry06M93AMd70WH00Mg6)
+LOL-v2 (Real and Synthetic) [Proton Drive](https://drive.proton.me/urls/8VX7YB2R9M#yj7WRJj38G9l)
+
 
 <details close> <summary>datasets (click to expand)</summary>
 
