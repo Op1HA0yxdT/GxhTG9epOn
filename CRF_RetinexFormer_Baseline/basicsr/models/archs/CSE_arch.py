@@ -261,8 +261,8 @@ class TransformerBlock(nn.Module):
 
         # self.attention1 = R_Masked_R_MHSA(dim=in_channels, num_heads=num_heads)
         # self.attention1 = R_MHSA_MSEF(dim=in_channels, num_heads=num_heads)
-        # self.attention = R_MHSA(dim=in_channels, num_heads=num_heads)
-        self.attention = MHSA(dim=in_channels, num_heads=num_heads)
+        self.attention = R_MHSA(dim=in_channels, num_heads=num_heads)
+        # self.attention = MHSA(dim=in_channels, num_heads=num_heads)
 
         self.norm1 = LayerNorm(dim=in_channels, LayerNorm_type=LayerNorm_type)
         self.norm2 = LayerNorm(dim=in_channels, LayerNorm_type=LayerNorm_type)
@@ -277,8 +277,8 @@ class TransformerBlock(nn.Module):
 
         # x = x + self.norm1(self.attention1(x, prev_feat)) # Attn + Norm + Residual
 
-        x = x + self.norm1(self.attention(x))
-        # x = x + self.norm1(self.attention(x, prev_feat))
+        # x = x + self.norm1(self.attention(x))
+        x = x + self.norm1(self.attention(x, prev_feat))
 
         # x = self.norm2(x1 + x2)
         
@@ -509,10 +509,7 @@ class Transformer(nn.Module):
         I2_triple_prime_U = self.upsample1_3(I2_triple_prime)  # [B, n_feat, H, W]
         I4_triple_prime_U = self.upsample1_2(self.upsample2_3(I4_triple_prime))  # [B, n_feat, H, W]
         output = I_triple_prime + I2_triple_prime_U + I4_triple_prime_U  # [B, n_feat, H, W]
-        scalar = (1/3 * ((I_triple_prime - I2_triple_prime_U)**2 
-                    + (I_triple_prime - I4_triple_prime_U)**2 
-                    + (I2_triple_prime_U - I4_triple_prime_U)**2)).mean()
-        print(scalar.item())
+
         # Final output convolution
         x_out = self.conv_out(output)  # [B, out_channels, H, W]
 
